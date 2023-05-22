@@ -2,34 +2,25 @@ const express = require("express");
 
 const app = express();
 
+/*
+  IMPORTING
+*/
 // logs
 const logger = require("./src/controllers/loggingController");
+
+// routers
+const usersRouter = require("./src/routes/usersRoutes");
+
+// ======================================================================
+
+/*
+  USING
+*/
+// logs
 app.use(logger);
 
-// getting all the users
-app.get("/users", (req, res, next) => {
-  res.send({ message: "getting all users" });
-});
-
-// get user by id
-app.get("/users/:id", (req, res, next) => {
-  res.send({ message: `getting user by id: ${req.params.id}` });
-});
-
-// create a new user
-app.post("/users", (req, res, next) => {
-  res.send({ message: "user created successfully!" });
-});
-
-// update user
-app.patch("/users/:id", (req, res, next) => {
-  res.send({ message: `user ${req.params.id} has been updated successfully!` });
-});
-
-// delete user
-app.delete("/users/:id", (req, res, next) => {
-  res.send({ message: `user ${req.params.id} has been deleted successfully!` });
-});
+// routers
+app.use("/users", usersRouter);
 
 app.use("/home", (req, res, next) => {
   res.send("<h1>Hello world!</h1>");
