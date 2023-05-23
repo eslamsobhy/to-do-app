@@ -6,8 +6,9 @@ const router = express.Router();
 const User = require("../models/User");
 
 // getting all the users
-router.get("/", (req, res, next) => {
-  res.send({ message: "getting all users" });
+router.get("/", async (req, res, next) => {
+  const users = await User.find();
+  res.send(users);
 });
 
 // get user by id
