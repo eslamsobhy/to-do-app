@@ -2,6 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
+// User Model
+const User = require("../models/User");
+
 // getting all the users
 router.get("/", (req, res, next) => {
   res.send({ message: "getting all users" });
@@ -13,10 +16,10 @@ router.get("/:id", (req, res, next) => {
 });
 
 // create a new user
-router.post("/", (req, res, next) => {
-  const body = req.body;
-  console.log(body);
-  res.send({ message: "user created successfully!" });
+router.post("/", async (req, res, next) => {
+  const { email, password } = req.body;
+  const createdUser = await User.create({ email, password });
+  res.send({ message: "user created successfully!", createdUser });
 });
 
 // update user
