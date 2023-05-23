@@ -14,6 +14,8 @@ router.get("/:id", (req, res, next) => {
 
 // create a new user
 router.post("/", (req, res, next) => {
+  const body = req.body;
+  console.log(body);
   res.send({ message: "user created successfully!" });
 });
 

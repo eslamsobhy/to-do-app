@@ -8,6 +8,10 @@ const app = express();
 // db
 require("./db");
 
+// parsing incoming requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // logs
 const logger = require("./src/controllers/loggingController");
 
@@ -20,7 +24,7 @@ const usersRouter = require("./src/routes/usersRoutes");
   USING
 */
 // logs
-app.use(logger);
+// app.use(logger);
 
 // routers
 app.use("/users", usersRouter);
