@@ -12,8 +12,10 @@ router.get("/", async (req, res, next) => {
 });
 
 // get user by id
-router.get("/:id", (req, res, next) => {
-  res.send({ message: `getting user by id: ${req.params.id}` });
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  res.send(user);
 });
 
 // create a new user
