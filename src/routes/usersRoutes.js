@@ -27,8 +27,12 @@ router.post("/", async (req, res, next) => {
 });
 
 // update user
-router.patch("/:id", (req, res, next) => {
-  res.send({ message: `user ${req.params.id} has been updated successfully!` });
+router.patch("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const update = { email: req.body.email };
+  console.log(update);
+  const updatedUser = await User.findByIdAndUpdate(id, update, { new: true });
+  res.send(updatedUser);
 });
 
 // delete user
