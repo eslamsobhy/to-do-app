@@ -5,6 +5,9 @@ const app = express();
 /*
   IMPORTING
 */
+// error handler
+const errorHandler = require("express-async-error").Handler;
+
 // db
 require("./db");
 
@@ -23,6 +26,9 @@ const usersRouter = require("./src/routes/usersRoutes");
 /*
   USING
 */
+// error handler
+app.use(errorHandler());
+
 // logs
 // app.use(logger);
 
