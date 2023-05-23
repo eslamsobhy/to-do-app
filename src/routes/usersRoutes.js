@@ -2,6 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
+// Custom error
+const AppError = require("../utils/AppError");
+
 // User Model
 const User = require("../models/User");
 
@@ -15,6 +18,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   const user = await User.findById(id);
+  if (!user) return next(new AppError("User not found!!", 404));
   res.send(user);
 });
 
@@ -31,6 +35,7 @@ router.patch("/:id", async (req, res, next) => {
   const { id } = req.params;
   const update = { email: req.body.email };
   const updatedUser = await User.findByIdAndUpdate(id, update, { new: true });
+  if (!updatedUser) return next(new AppError("User not found!!", 404));
   res.send(updatedUser);
 });
 
@@ -38,6 +43,7 @@ router.patch("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   const deletedUser = await User.findByIdAndDelete(id);
+  if (!deletedUser) return next(new AppError("User not found!!", 404));
   res.send(deletedUser);
 });
 
