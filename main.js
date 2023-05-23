@@ -5,6 +5,9 @@ const app = express();
 /*
   IMPORTING
 */
+// db
+require("./db");
+
 // logs
 const logger = require("./src/controllers/loggingController");
 
