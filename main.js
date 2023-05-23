@@ -26,4 +26,13 @@ app.use("/home", (req, res, next) => {
   res.send("<h1>Hello world!</h1>");
 });
 
+// Public Error Handler
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).send({
+    status: statusCode,
+    message: err?.message || "Internal Server Error!",
+    errors: err?.errors || [],
+  });
+});
 app.listen(8000);
