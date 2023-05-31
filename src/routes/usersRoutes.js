@@ -8,6 +8,9 @@ const AppError = require("../utils/AppError");
 // User Model
 const User = require("../models/User");
 
+// bcrypt
+const bcrypt = require("bcrypt");
+
 // getting all the users
 router.get("/", async (req, res, next) => {
   const users = await User.find();
@@ -25,7 +28,8 @@ router.get("/:id", async (req, res, next) => {
 // create a new user
 router.post("/", async (req, res, next) => {
   const { email, password } = req.body;
-  const createdUser = await User.create({ email, password });
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const createdUser = await User.create({ email, password: hashedPassword });
   createdUser.password = undefined;
   res.send({ message: "user created successfully!", createdUser });
 });
