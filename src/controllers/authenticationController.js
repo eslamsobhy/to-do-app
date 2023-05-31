@@ -38,4 +38,23 @@ const register = async (req, res, next) => {
   res.send({ message: "user created successfully!", createdUser });
 };
 
-module.exports = { getAllUsers, getUserById, register, updateUser, deleteUser };
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return next(new AppError("email & password are required!", 404));
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) return next(new AppError("Invalid credentials", 404));
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return next(new AppError("Invalid credentials", 404));
+  user.password = undefined;
+  res.send(user);
+};
+
+module.exports = {
+  getAllUsers,
+  getUserById,
+  register,
+  updateUser,
+  deleteUser,
+  login,
+};

@@ -9,6 +9,7 @@ const {
   register,
   updateUser,
   deleteUser,
+  login,
 } = require("../controllers/authenticationController");
 
 // getting all the users
@@ -25,5 +26,8 @@ router.patch("/:id", updateUser);
 
 // delete user
 router.delete("/:id", deleteUser);
+
+// login
+router.post("/login", login);
 
 module.exports = router;
