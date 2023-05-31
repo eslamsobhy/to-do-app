@@ -2,53 +2,28 @@ const express = require("express");
 
 const router = express.Router();
 
-// Custom error
-const AppError = require("../utils/AppError");
-
-// User Model
-const User = require("../models/User");
-
-// bcrypt
-const bcrypt = require("bcrypt");
+// Users Logic
+const {
+  getAllUsers,
+  getUserById,
+  register,
+  updateUser,
+  deleteUser,
+} = require("../controllers/authenticationController");
 
 // getting all the users
-router.get("/", async (req, res, next) => {
-  const users = await User.find();
-  res.send(users);
-});
+router.get("/", getAllUsers);
 
 // get user by id
-router.get("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
-  if (!user) return next(new AppError("User not found!!", 404));
-  res.send(user);
-});
+router.get("/:id", getUserById);
 
-// create a new user
-router.post("/", async (req, res, next) => {
-  const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const createdUser = await User.create({ email, password: hashedPassword });
-  createdUser.password = undefined;
-  res.send({ message: "user created successfully!", createdUser });
-});
+// create a new user (sign up)
+router.post("/", register);
 
 // update user
-router.patch("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const update = { email: req.body.email };
-  const updatedUser = await User.findByIdAndUpdate(id, update, { new: true });
-  if (!updatedUser) return next(new AppError("User not found!!", 404));
-  res.send(updatedUser);
-});
+router.patch("/:id", updateUser);
 
 // delete user
-router.delete("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const deletedUser = await User.findByIdAndDelete(id);
-  if (!deletedUser) return next(new AppError("User not found!!", 404));
-  res.send(deletedUser);
-});
+router.delete("/:id", deleteUser);
 
 module.exports = router;
