@@ -1,6 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
+
+// login validation middleware
+const { loginValidation } = require("../utils/authenticationValidation");
 
 // Users Logic
 const {
@@ -28,6 +30,6 @@ router.patch("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
 // login
-router.post("/login", login);
+router.post("/login", loginValidation, login);
 
 module.exports = router;
