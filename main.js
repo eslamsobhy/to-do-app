@@ -20,6 +20,7 @@ const logger = require("./src/controllers/loggingController");
 
 // routers
 const usersRouter = require("./src/routes/usersRoutes");
+const todoRoutes = require("./src/routes/todoRoutes");
 
 // ======================================================================
 
@@ -34,6 +35,7 @@ app.use(errorHandler());
 
 // routers
 app.use("/users", usersRouter);
+app.use("/todos", todoRoutes);
 
 app.use("/home", (req, res, next) => {
   res.send("<h1>Hello world!</h1>");
