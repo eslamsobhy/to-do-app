@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-// login validation middleware
-const { loginValidation } = require("../utils/authenticationValidation");
+// login & signup validation middleware
+const {
+  loginValidation,
+  signupValidation,
+} = require("../utils/authenticationValidation");
 
 // Users Logic
 const {
@@ -21,7 +24,7 @@ router.get("/", getAllUsers);
 router.get("/:id", getUserById);
 
 // create a new user (sign up)
-router.post("/", register);
+router.post("/", signupValidation, register);
 
 // update user
 router.patch("/:id", updateUser);
