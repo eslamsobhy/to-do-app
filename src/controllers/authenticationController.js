@@ -3,6 +3,9 @@ const AppError = require("../utils/AppError");
 // bcrypt
 const bcrypt = require("bcrypt");
 
+// jwt
+const jwt = require("jsonwebtoken");
+
 const getAllUsers = async (req, res, next) => {
   const users = await User.find();
   res.send(users);
@@ -50,11 +53,14 @@ const login = async (req, res, next) => {
   const isMatch = await user.comparePassword(password);
   if (!isMatch) return next(new AppError("Invalid credentials", 404));
 
+  // create token
+  const token = jwt.sign({ id: user._id }, "mySecret");
+
   // avoid returning password in the response
   user.password = undefined;
 
   // the response
-  res.send({ message: "user logged in!", user });
+  res.send({ message: "user logged in!", user, token });
 };
 
 module.exports = {
