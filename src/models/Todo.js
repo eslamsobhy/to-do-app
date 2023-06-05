@@ -6,17 +6,19 @@ const todoSchema = new Schema({
   title: {
     type: String,
     required: true,
-    minlength: 5,
-    maxlength: 25,
   },
-  body: {
+  status: {
     type: String,
+    enum: ["to-do", "in-progress", "done!"],
+    default: "to-do",
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-    minlength: 10,
-    maxlength: 100,
   },
 });
 
-const Todo = mongoose.model("to-do", todoSchema);
+const Todo = mongoose.model("Todo", todoSchema);
 
 module.exports = Todo;
