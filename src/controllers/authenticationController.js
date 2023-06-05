@@ -42,10 +42,10 @@ const login = async (req, res, next) => {
     return next(new AppError("email & password are required!", 404));
   const user = await User.findOne({ email }).select("+password");
   if (!user) return next(new AppError("Invalid credentials", 404));
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await user.comparePassword(password);
   if (!isMatch) return next(new AppError("Invalid credentials", 404));
   user.password = undefined;
-  res.send(user);
+  res.send({ message: "user logged in!", user });
 };
 
 module.exports = {

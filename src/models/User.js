@@ -28,6 +28,12 @@ userSchema.post("save", async function () {
   this.password = undefined;
 });
 
+// Instance methods:
+userSchema.methods.comparePassword = async function (password) {
+  const isMatched = await bcrypt.compare(password, this.password);
+  return isMatched;
+};
+
 // create the model
 const User = mongoose.model("User", userSchema);
 
