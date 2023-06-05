@@ -18,9 +18,19 @@ const userSchema = new Schema({
 // Middlewares
 userSchema.pre("save", async function () {
   // hashing the password before saving to the database
-  const hashedPassword = await bcrypt.hash(this.password, 10);
-  this.password = hashedPassword;
+  if (this.isModified("password")) {
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
+  }
 });
+
+/*
+  - the previous middleware will be executed when creating a new user or when updating the user,
+  - we just want it to be executed when the password is changed:
+    - either when creating a new user
+    - or when updating the user itself
+    - so we added that condition.
+*/
 
 userSchema.post("save", async function () {
   // after saving the hashed password to the database
