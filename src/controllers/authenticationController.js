@@ -32,9 +32,7 @@ const deleteUser = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const createdUser = await User.create({ email, password: hashedPassword });
-  createdUser.password = undefined;
+  const createdUser = await User.create({ email, password });
   res.send({ message: "user created successfully!", createdUser });
 };
 
