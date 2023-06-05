@@ -2,6 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
+// token verification middleware
+const verifyToken = require("../utils/verifyToken");
+
 // importing the CRUD logic
 const {
   getAllTodos,
@@ -12,7 +15,7 @@ const {
 } = require("../controllers/todoController");
 
 // getting all to-do's
-router.get("/", getAllTodos);
+router.get("/", verifyToken, getAllTodos);
 
 // get to-do by id
 router.get("/:id", getTodoById);

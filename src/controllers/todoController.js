@@ -1,8 +1,9 @@
 const Todo = require("../models/Todo");
 const AppError = require("../utils/AppError");
 
-const getAllTodos = () => {
-  // logic goes here
+const getAllTodos = (req, res, next) => {
+  console.log(req.user);
+  res.send("Hello");
 };
 
 const getTodoById = () => {
