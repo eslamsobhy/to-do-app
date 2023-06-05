@@ -1,9 +1,9 @@
 const Todo = require("../models/Todo");
 const AppError = require("../utils/AppError");
 
-const getAllTodos = (req, res, next) => {
-  console.log(req.user);
-  res.send("Hello");
+const getAllTodos = async (req, res, next) => {
+  const todos = await Todo.find().populate("userId");
+  res.send({ todos });
 };
 
 const getTodoById = () => {
