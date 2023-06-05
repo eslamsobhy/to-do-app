@@ -21,7 +21,7 @@ router.get("/", verifyToken, getAllTodos);
 router.get("/:id", getTodoById);
 
 // create a new to-do
-router.post("/", createTodo);
+router.post("/", verifyToken, createTodo);
 
 // update to-do
 router.patch("/:id", updateTodo);
