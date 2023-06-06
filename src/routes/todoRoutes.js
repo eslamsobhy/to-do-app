@@ -18,7 +18,7 @@ const {
 router.get("/", verifyToken, getAllTodos);
 
 // get to-do by id
-router.get("/:id", getTodoById);
+router.get("/:id", verifyToken, getTodoById);
 
 // create a new to-do
 router.post("/", verifyToken, createTodo);

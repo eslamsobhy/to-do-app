@@ -6,8 +6,12 @@ const getAllTodos = async (req, res, next) => {
   res.send({ todos });
 };
 
-const getTodoById = (req, res, next) => {
-  // logic goes here
+const getTodoById = async (req, res, next) => {
+  const { id } = req.params;
+  const todo = await Todo.findById(id).populate("userId");
+  if (!todo) return next(new AppError("to-do not found!", 404));
+
+  res.send(todo);
 };
 
 const createTodo = async (req, res, next) => {
