@@ -44,8 +44,12 @@ const updateTodo = async (req, res, next) => {
   res.send({ message: "record updated successfully!", updatedTodo });
 };
 
-const deleteTodo = () => {
-  // logic goes here
+const deleteTodo = async (req, res, next) => {
+  const { id } = req.params;
+  const deletedTodo = await Todo.findByIdAndDelete(id);
+  if (!deletedTodo) return next(new AppError("to-do not found!!", 400));
+
+  res.send({ message: "record deleted successfully!", deletedTodo });
 };
 
 module.exports = {

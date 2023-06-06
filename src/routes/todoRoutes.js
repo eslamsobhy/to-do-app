@@ -27,6 +27,6 @@ router.post("/", verifyToken, createTodo);
 router.patch("/:id", verifyToken, updateTodo);
 
 // delete to-do
-router.delete("/:id", deleteTodo);
+router.delete("/:id", verifyToken, deleteTodo);
 
 module.exports = router;
