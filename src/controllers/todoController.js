@@ -27,8 +27,21 @@ const createTodo = async (req, res, next) => {
   res.send({ message: "Todo created successfully!", createdTodo });
 };
 
-const updateTodo = () => {
-  // logic goes here
+const updateTodo = async (req, res, next) => {
+  const { id } = req.params;
+  const todo = await Todo.findById(id);
+  if (!todo) return next(new AppError("todo not found!!", 400));
+
+  const updatedData = {};
+  updatedData.title = req.body.title ? req.body.title : todo.title;
+  updatedData.status = req.body.status ? req.body.status : todo.status;
+
+  const updatedTodo = await Todo.findByIdAndUpdate(id, updatedData, {
+    new: true,
+  });
+  if (!updatedTodo) return next(new AppError("todo not found!!", 400));
+
+  res.send({ message: "record updated successfully!", updatedTodo });
 };
 
 const deleteTodo = () => {
