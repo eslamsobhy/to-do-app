@@ -11,12 +11,18 @@ const errorHandler = require("express-async-error").Handler;
 // env varaibles
 require("dotenv").config();
 
+// CORS
+const cors = require("cors");
+
 // db
 require("./db");
 
 // parsing incoming requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// CORS
+app.use(cors());
 
 // logs
 const logger = require("./src/controllers/loggingController");
