@@ -8,6 +8,9 @@ const app = express();
 // error handler
 const errorHandler = require("express-async-error").Handler;
 
+// env varaibles
+require("dotenv").config();
+
 // db
 require("./db");
 
@@ -50,4 +53,5 @@ app.use((err, req, res, next) => {
     errors: err?.errors || [],
   });
 });
-app.listen(8000);
+
+app.listen(process.env.PORT);

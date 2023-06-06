@@ -8,7 +8,7 @@ const verifyToken = async (req, res, next) => {
   if (!token) return next(new AppError("please provide a token!", 400));
 
   // verify token => get the payload
-  const { id } = jwt.verify(token, "mySecret");
+  const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
   // get user with that specific id
   const user = await User.findOne({ _id: id });

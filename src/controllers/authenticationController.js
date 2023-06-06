@@ -54,7 +54,7 @@ const login = async (req, res, next) => {
   if (!isMatch) return next(new AppError("Invalid credentials", 404));
 
   // create token
-  const token = jwt.sign({ id: user._id }, "mySecret");
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
   // avoid returning password in the response
   user.password = undefined;
